@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="main_title">Active Listings</h2>
+    {% if models%}
+    
+    <ul>
+        {%for model in models%}
+        {%if model.button == "enable"%}
+        <div class="list_container"><li>
+            {%for i in image%}
+                {%if i.list == model%}
+                <a  href = "list/{{model.id}}"><img class="image" src="{{i.image.url}}"></a>
+                {%endif%}
+            {%endfor%}
+            <h2 class="title"><a class="list" href = "list/{{model.id}}">{{model.title|capfirst}}</a></h2>
+            {%for bid in bids%}
+                {%if bid.list__id == model.id%}
+                    <h4 class="list"><b>Price:</b> ${{bid.bid__max}}</h4>
+                {%endif%}
+            {%endfor%}
+            <div class ="text"><h6 class="list">{{model.text}}</h6></div>
+            <h6 class="list">{{model.date}}</h6></li></div>
+        {%endif%}
+        {%endfor%}
+    </ul>
+    {%else%}
+    <h4>Do not have any list</h4>
+    {%endif%}
+{% endblock %}

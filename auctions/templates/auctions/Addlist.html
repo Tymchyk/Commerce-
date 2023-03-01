@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 id ="addtitle">Create your own list</h2>
+    <hr>
+   <form actions ="url 'addlist'" method = 'post' class="addform" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Write title for your list</h3>
+    <div class='mb-3 col-sm-6'>
+        {{form.title}}
+    </div>
+    <h3>Describe your list</h3>
+    <div class='mb-3 col-sm-6'>
+        {{form.text}}
+    </div>
+    <h4>Choose image</h4>
+    <div class='mb-3 col-sm-6'>
+        <p>{{imageform.image}}</p>
+    </div>
+    <h4>Write start price</h4>
+    <div class='input-group mb-3'>
+        <span class="input-group-text">$</span>
+        <div class="col-sm-2">
+            {{bidform.bid}}
+        </div>
+        <span class="input-group-text">.00</span>
+    </div>
+    <h4>Choose category</h4>
+    <div class='mb-3 col-sm-2'>
+        <select class="form-select" name = "categ">s
+            {%for category in categories%}
+                <option value = "{{category.id}}">{{category}}</option>
+            {%endfor%}
+        </select>
+    </div>
+        <button class="btn btn-primary" type= 'submit'>Add list </button>
+   </form>
+{% endblock %}

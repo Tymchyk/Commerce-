@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="main_title">Watch Listings</h2>
+    {%if watchlist %}
+        <ul>{%for watch in watchlist%}
+            {%if watch.favorites == "enable" %}
+            <div class="list_container"><li>
+                    {%for i in image%}
+                        {%if i.list == watch.list%}
+                        <a  href = "list/{{watch.list.id}}"> <img  class="image" src="{{i.image.url}}"></a>
+                        {%endif%}
+                    {%endfor%}
+                    <h2 class="title"><a class="list" href = "list/{{watch.list.id}}">{{watch.list.title|capfirst}}</a></h2>
+                    {%for bid in bids%}
+                        {%if bid.list__id == watch.list.id%}
+                            <h4 class="list"><b>Price:</b> ${{bid.bid__max}}</h4>
+                        {%endif%}
+                    {%endfor%}
+                    <div class ="text"><h6 class="list">{{watch.list.text}}</h6></div>
+                    <h6 class="list">{{watch.list.date}}</h6></li></div>
+            {%endif%}
+        {%endfor%}<ul>
+    {%endif%}
+{% endblock %}

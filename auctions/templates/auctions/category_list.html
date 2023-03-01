@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="main_title"> {{name}} listings</h2>
+    {% if lists%}
+    <ul>
+        {%for list in lists%}
+        <div class="list_container"><li>
+                {%for i in image%}
+                {%if i.list == list%}
+                <a href = {% url "list" id=list.id%}><img class="image" src="{{i.image.url}}"><a>
+                {%endif%}
+            {%endfor%}
+            <h2 class="title"><a class="list" href = {% url "list" id=list.id%}>{{list.title|capfirst}}</a></h2>
+            {%for bid in bids%}
+                {%if bid.list__id == list.id%}
+                    <h4 class="list"><b>Price:</b> ${{bid.bid__max}}</h4>
+                {%endif%}
+            {%endfor%}
+            <div class ="text"><h6 class="list">{{list.text}}</h6></div>
+            <h6 class="list">{{list.date}}</h6></li></div>
+        {%endfor%}
+    </ul>
+    {%else%}
+    <p>Do not have any list</p>
+    {%endif%}
+{% endblock %}

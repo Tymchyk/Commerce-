@@ -1,0 +1,76 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div class = "list_page">
+        {% if user.is_authenticated%}
+            {%if check_list.favorites == "disable" %}
+            <form actions="{{name}}" method ="post">
+                {%csrf_token%}
+                <button name="watchlist" class="btn btn-primary watch" value ="enable">Add to watchlist</button>
+            </form>
+            {%else%}
+            <form actions="{{name}}" method ="post">
+                {%csrf_token%}
+                <button name="watchlist"  class="btn btn-primary watch" value ="disable">Delete from watchlist</button>
+            </form>
+            {%endif%}
+        <h2 class ="title_page">{{list.title}}</h2>
+        <hr>
+        <img class = "image_page" src = "{{image.image.url}}">
+        <hr>
+        <div class= "text_page"> <h4>{{list.text}}</h4></div>
+        <hr>
+        <h3>Price: {{bid.bid__max}} $</h3>
+            {%if list.button == "enable" %}
+                {%if check_user != list.user%}
+                    {%if winner.user == check_user%}
+                        <p>{{counts.bid__count}} bid(s) so far. Your bid is current bid</p>
+                    {%else%}
+                        <p>{{counts.bid__count}} bid(s) so far. Your bid is already beaten</p>
+                    {%endif%}
+                    <form action="{{name}}" method="post">
+                        {% csrf_token %}
+                        <div class='input-group mb-3'>
+                            <span class="input-group-text">$</span>
+                            <div class="col-sm-3">
+                                {{bidform.bid}}
+                            </div>
+                            <button  class="btn btn-primary" type="submit"> Bid</button>
+                        </div>
+                    </form>
+                {%endif%}
+            {%else%}
+                <h3>The winner is {{winner.user}}</h3>
+            {%endif%}
+        {%endif%}
+        {% if check_user == list.user%}
+            {%if list.button == 'disable'%}
+            <form action="{{name}}" method = "post">
+                {% csrf_token %}
+                <button type ="submit" class="btn btn-primary mt-3" name = "change" value ="enable">Start slot</button>
+            </form>
+            {%else%}
+            <form action="{{name}}" method = "post">
+                {% csrf_token %}
+                <button type ="submit" class="btn btn-primary mt-3" name = "change" value ="disable">Close slot</button>
+            </form>
+            {%endif%}
+        {%endif%}
+        <hr>
+        <h3 class ="title_page">Details</h3>
+        <p>Made by: <b>{{list.user}}</b></p>
+        <p >Category: <b>{{list.category}}</b></p>
+        <hr>
+        <form action ="{{name}}" method ="post" class="comments">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+            <div class="col-sm-8">{{comments.comment}}</div>
+            <button class="btn btn-primary" type = "submit" name ="titlecom" value="{{list.id}}"> Add comment</button>
+            </div>
+        </form>
+        {%for comment in comments_all%}
+            <p class= "comment_id"><b>{{comment.user}}</b></p>
+            <p class = "comment">{{comment.comment}}</p>
+        {%endfor%}
+    </div>
+{% endblock %}

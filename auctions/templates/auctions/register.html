@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="enterform">
+    <h1 id="register">Register</h1>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post" class="form">
+        {% csrf_token %}
+        <div class='mb-3 row'>
+            <label class="col-sm-4 col-form-label"><b>Username</b></label>
+            <div class="col-sm-7">
+            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
+            </div>
+        </div>
+        <div class='mb-3 row'>
+            <label class="col-sm-4 col-form-label"><b>Email Address</b></label>
+            <div class="col-sm-7">
+            <input class="form-control" type="email" name="email" placeholder="Email Address">
+            </div>
+        </div>
+        <div class='mb-3 row'>
+            <label class="col-sm-4 col-form-label"><b>Password</b></label>
+            <div class="col-sm-7">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div class='mb-3 row'>
+            <label class="col-sm-4 col-form-label"><b>Confirm Password</b></label>
+            <div class="col-sm-7">
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            </div>
+        </div>
+        <div class="log_butt">
+            <input class="btn btn-primary" type="submit" value="Register">
+        </div>
+    </form>
+
+    <p class="redirect">Already have an account? <a href="{% url 'login' %}">Log In here.</a><p>
+</div>
+{% endblock %}

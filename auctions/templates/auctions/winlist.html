@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="main_title">Win Listings</h2>
+    {%if wins %}
+        <ul>{%for win in wins%}
+            {%for w in win%}
+            <div class="list_container"><li>
+                    {%for i in image%}
+                        {%if i.list == w.list%}
+                        <a  href = "list/{{w.list.id}}"> <img  class="image" src="{{i.image.url}}"></a>
+                        {%endif%}
+                    {%endfor%}
+                    <h2 class="title"><a class="list" href = "list/{{w.list.id}}">{{w.list.title|capfirst}}</a></h2>
+                    {%for bid in bids%}
+                        {%if bid.list__id == w.list.id%}
+                            <h4 class="list"><b>Price:</b> ${{bid.bid__max}}</h4>
+                        {%endif%}
+                    {%endfor%}
+                    <div class ="text"><h6 class="list">{{w.list.text}}</h6></div>
+                    <h6 class="list">{{w.list.date}}</h6></li></div>
+            {%endfor%}
+            {%endfor%}<ul>
+    {%endif%}
+{% endblock %}

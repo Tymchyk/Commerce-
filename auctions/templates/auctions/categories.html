@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categories</h2>
+    {% if categories%}
+    <ol class="list-group list-group-numbered">
+        {%for category in categories%}
+            <div class="col-sm-2"><li class="list-group-item d-flex justify-content align-items-center"><h4><a href ="category/{{category.id}}"  class="link">{{category.categories}}
+            {%for count in counts%}
+                {%if category.id == count.category_id %}
+                <span class="badge bg-primary rounded-pill justify-content-end">{{count.title__count}}</span>
+                {%endif%}
+            {%endfor%}
+            </h4></div>
+        {%endfor%}
+    </ol>
+    {%else%}
+    <p>Do not have any categories</p>
+    {%endif%}
+{% endblock %}
